@@ -1,0 +1,15 @@
+Resources:
+  BookBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+        -
+          AllowedOrigins:
+            - '*'
+          AllowedHeaders:
+            - '*'
+          AllowedMethods:
+            - GET
+            - HEAD
+          MaxAge: 3000

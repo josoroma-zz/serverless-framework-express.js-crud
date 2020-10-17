@@ -1,0 +1,19 @@
+{
+  "name": "serverless-books",
+  "version": "1.0.0",
+  "description": "",
+  "main": "functions/books.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.397.0",
+    "express": "^4.17.1",
+    "body-parser": "^1.18.3",
+    "serverless-http": "^2.4.1",
+    "serverless-offline": "^6.7.0"
+  }
+}
