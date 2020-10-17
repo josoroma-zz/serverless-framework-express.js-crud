@@ -1,0 +1,14 @@
+Resources:
+  UserCategoryDynamoDBTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: ${self:custom.tableName}
+      AttributeDefinitions:
+      - AttributeName: ${self:custom.tableKey}
+        AttributeType: S
+      KeySchema:
+      - AttributeName: ${self:custom.tableKey}
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1

@@ -1,0 +1,59 @@
+service: serverless-books
+plugins:
+  - serverless-offline
+
+custom:
+  tableName: books
+  tableKey: bookId
+  serverless-offline:
+    useChildProcesses: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-1
+  tags:
+    project: cloud-box.pl
+  tracing:
+    lambda: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: 'arn:aws:dynamodb:eu-west-1:*:*'
+  environment:
+    TABLE_NAME: ${self:custom.tableName}
+    BUCKET_NAME: 'serverless-books-dev-bucket-name'
+
+functions:
+  books:
+    handler: functions/books.handler
+    events:
+      - httpApi:
+          method: "*"
+          path: /books
+      - httpApi:
+          method: "*"
+          path: /books/{params}
+
+# Configuration for creating REST API Gateway instead HTTP API Gateway
+# functions:
+#   books:
+#     handler: functions/books.handler
+#     events:
+#       - http:
+#           method: ANY
+#           path: books/
+#       - http:
+#           method: ANY
+#           path: books/{params}
+
+resources:
+  - ${file(resources/dynamoDb.yml)}
+  - ${file(resources/s3.yml)}
