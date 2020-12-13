@@ -12,5 +12,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "serverless-http": "^2.4.1"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.8.0"
   }
 }
