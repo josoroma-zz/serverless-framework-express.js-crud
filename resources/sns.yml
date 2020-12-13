@@ -1,0 +1,5 @@
+Resources:
+  SuperTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: MyCustomTopic

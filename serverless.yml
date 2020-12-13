@@ -28,10 +28,22 @@ provider:
         - dynamodb:DeleteItem
       Resource: 'arn:aws:dynamodb:eu-west-1:*:*'
   environment:
+    NODE_PATH: "./:/opt/node_modules"
     TABLE_NAME: ${self:custom.tableName}
     BUCKET_NAME: 'serverless-books-dev-bucket-name'
 
 functions:
+  hello:
+    handler: functions/hello.hello
+    # maximumRetryAttempts: 1
+    destinations:
+      onSuccess: arn:aws:sns:eu-west-1:673177665601:success-topic
+      onFailure: arn:aws:sns:eu-west-1:673177665601:fail-topic
+    events:
+      - s3:
+          bucket: file2-bucket-my-dome123-qqq
+          event: s3:ObjectCreated:*
+        
   books:
     handler: functions/books.handler
     events:
@@ -41,6 +53,8 @@ functions:
       - httpApi:
           method: "*"
           path: /books/{params}
+    layers:
+      - ${cf:expres-layer-dev.ExpressLayerExport}
 
 # Configuration for creating REST API Gateway instead HTTP API Gateway
 # functions:
@@ -55,5 +69,16 @@ functions:
 #           path: books/{params}
 
 resources:
+  - ${file(resources/sqs.yml)}
+  - ${file(resources/sns.yml)}
   - ${file(resources/dynamoDb.yml)}
   - ${file(resources/s3.yml)}
+
+# layers:
+#   ExpressNodeModul:
+#     path: expressjs_layer
+#     description: "dependency for express js"
+
+package:
+  exclude:
+    - expressjs_layer/**
