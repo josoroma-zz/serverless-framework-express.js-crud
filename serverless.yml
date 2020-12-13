@@ -3,7 +3,8 @@ plugins:
   - serverless-offline
 
 custom:
-  tableName: books
+  stage: ${opt:stage, self:provider.stage}
+  tableName: books-${self:custom.stage}
   tableKey: bookId
   serverless-offline:
     useChildProcesses: true
@@ -12,6 +13,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
+  stage: dev
   tags:
     project: cloud-box.pl
   tracing:
@@ -41,7 +43,7 @@ functions:
       onFailure: arn:aws:sns:eu-west-1:673177665601:fail-topic
     events:
       - s3:
-          bucket: file2-bucket-my-dome123-qqq
+          bucket: file2-bucket-my-dome123-qqq-${self:custom.stage}
           event: s3:ObjectCreated:*
         
   books:
