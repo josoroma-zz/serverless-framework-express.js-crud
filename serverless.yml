@@ -1,11 +1,16 @@
 service: serverless-books
 plugins:
   - serverless-offline
+  - serverless-lumigo
+
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: books-${self:custom.stage}
   tableKey: bookId
+  lumigo:
+    token: t_6dc55b1ae4934d75994b9
+    nodePackageManager: npm
   serverless-offline:
     useChildProcesses: true
 
