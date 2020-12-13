@@ -69,10 +69,10 @@ functions:
 #           path: books/{params}
 
 resources:
-  - ${file(resources/sqs.yml)}
-  - ${file(resources/sns.yml)}
+  # - ${file(resources/sqs.yml)}
+  # - ${file(resources/sns.yml)}
   - ${file(resources/dynamoDb.yml)}
-  - ${file(resources/s3.yml)}
+  # - ${file(resources/s3.yml)}
 
 # layers:
 #   ExpressNodeModul:
