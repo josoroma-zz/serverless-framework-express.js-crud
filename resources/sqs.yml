@@ -1,0 +1,9 @@
+Resources:
+  MyQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: "MyQueue"
+  SuccessQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: "SuccessQueue"
